@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -9,10 +9,72 @@
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :root {
+      --bg-grad-1: #a8edca;
+      --bg-grad-2: #d0f5e8;
+      --bg-grad-3: #b2f0d8;
+      --bg-grad-4: #7de0b5;
+      --blob1: #52c99a;
+      --blob2: #a0f0cf;
+      --text-main: #0f3d2b;
+      --text-sub: #2d6b50;
+      --text-muted: #3a7a5c;
+      --text-footer: #3a7a5c;
+      --badge-bg: rgba(255,255,255,0.45);
+      --badge-border: rgba(255,255,255,0.7);
+      --badge-color: #1a5c42;
+      --pill-bg: rgba(255,255,255,0.5);
+      --pill-border: rgba(255,255,255,0.8);
+      --pill-color: #1a4d38;
+      --pill-hover-bg: rgba(255,255,255,0.78);
+      --modal-bg1: #e8faf2;
+      --modal-bg2: #f4fdf9;
+      --modal-title: #0f3d2b;
+      --modal-body: #3a7a5c;
+      --modal-feat: #2d6b50;
+      --modal-feat-border: rgba(44,201,138,0.12);
+      --modal-tag-bg: rgba(44,201,138,0.15);
+      --modal-tag-border: rgba(44,201,138,0.35);
+      --modal-tag-color: #1a6648;
+      --toggle-bg: rgba(255,255,255,0.45);
+      --toggle-border: rgba(255,255,255,0.7);
+    }
+
+    [data-theme="dark"] {
+      --bg-grad-1: #0a1f16;
+      --bg-grad-2: #0d2a1c;
+      --bg-grad-3: #0f3324;
+      --bg-grad-4: #071510;
+      --blob1: #1a6645;
+      --blob2: #0f4a30;
+      --text-main: #d6f5e8;
+      --text-sub: #8ecfaf;
+      --text-muted: #6aad8a;
+      --text-footer: #5a9a78;
+      --badge-bg: rgba(44,201,138,0.12);
+      --badge-border: rgba(44,201,138,0.25);
+      --badge-color: #7de0b5;
+      --pill-bg: rgba(44,201,138,0.1);
+      --pill-border: rgba(44,201,138,0.22);
+      --pill-color: #a8edca;
+      --pill-hover-bg: rgba(44,201,138,0.22);
+      --modal-bg1: #0f2a1e;
+      --modal-bg2: #0d2419;
+      --modal-title: #c8f0dd;
+      --modal-body: #7abf9a;
+      --modal-feat: #8ecfaf;
+      --modal-feat-border: rgba(44,201,138,0.1);
+      --modal-tag-bg: rgba(44,201,138,0.1);
+      --modal-tag-border: rgba(44,201,138,0.25);
+      --modal-tag-color: #7de0b5;
+      --toggle-bg: rgba(44,201,138,0.12);
+      --toggle-border: rgba(44,201,138,0.25);
+    }
+
     body {
       font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg, #a8edca 0%, #d0f5e8 40%, #b2f0d8 70%, #7de0b5 100%);
-      color: #1a3a2e;
+      background: linear-gradient(135deg, var(--bg-grad-1) 0%, var(--bg-grad-2) 40%, var(--bg-grad-3) 70%, var(--bg-grad-4) 100%);
+      color: var(--text-main);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -22,26 +84,9 @@
       padding: 2rem;
       overflow: hidden;
       position: relative;
+      transition: background 0.4s ease, color 0.4s ease;
     }
 
-    /* Floating particles */
-    .particle {
-      position: fixed;
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 0;
-      animation: floatParticle linear infinite;
-      opacity: 0;
-    }
-
-    @keyframes floatParticle {
-      0%   { transform: translateY(100vh) scale(0); opacity: 0; }
-      10%  { opacity: 0.6; }
-      90%  { opacity: 0.4; }
-      100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
-    }
-
-    /* Blobs */
     body::before, body::after {
       content: '';
       position: fixed;
@@ -53,22 +98,62 @@
     }
     body::before {
       width: 500px; height: 500px;
-      background: #52c99a;
+      background: var(--blob1);
       top: -120px; left: -160px;
     }
     body::after {
       width: 420px; height: 420px;
-      background: #a0f0cf;
+      background: var(--blob2);
       bottom: -90px; right: -110px;
       animation-delay: -5s;
+    }
+
+    /* Theme toggle */
+    .theme-toggle {
+      position: fixed;
+      top: 1.2rem;
+      right: 1.4rem;
+      z-index: 50;
+      background: var(--toggle-bg);
+      border: 1px solid var(--toggle-border);
+      border-radius: 50px;
+      padding: 0.4rem 0.9rem;
+      font-size: 0.8rem;
+      color: var(--text-sub);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      backdrop-filter: blur(8px);
+      transition: background 0.3s, color 0.3s, transform 0.15s;
+      animation: fadeUp 0.6s ease 1s both;
+      font-family: inherit;
+      font-weight: 500;
+    }
+    .theme-toggle:hover { transform: scale(1.05); }
+    .theme-toggle .toggle-icon { font-size: 1rem; transition: transform 0.4s ease; }
+    .theme-toggle:hover .toggle-icon { transform: rotate(20deg); }
+
+    /* Particle */
+    .particle {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+      animation: floatParticle linear infinite;
+      opacity: 0;
+    }
+    @keyframes floatParticle {
+      0%   { transform: translateY(100vh) scale(0); opacity: 0; }
+      10%  { opacity: 0.5; }
+      90%  { opacity: 0.3; }
+      100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
     }
 
     @keyframes blobDrift {
       0%   { transform: translate(0,0) scale(1); }
       100% { transform: translate(30px,20px) scale(1.08); }
     }
-
-    /* Load animations */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(22px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -82,13 +167,13 @@
       0%   { background-position: -400px 0; }
       100% { background-position: 400px 0; }
     }
-    @keyframes pulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(44, 200, 138, 0.4); }
-      50%       { box-shadow: 0 0 0 10px rgba(44, 200, 138, 0); }
-    }
     @keyframes floatBadge {
       0%, 100% { transform: translateY(0px); }
       50%       { transform: translateY(-5px); }
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(44,200,138,0.35); }
+      50%       { box-shadow: 0 0 0 10px rgba(44,200,138,0); }
     }
 
     .container {
@@ -99,16 +184,17 @@
 
     .badge {
       display: inline-block;
-      background: rgba(255,255,255,0.45);
-      border: 1px solid rgba(255,255,255,0.7);
+      background: var(--badge-bg);
+      border: 1px solid var(--badge-border);
       border-radius: 50px;
       padding: 0.35rem 1rem;
       font-size: 0.75rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: #1a5c42;
+      color: var(--badge-color);
       margin-bottom: 1.75rem;
       animation: fadeUp 0.7s ease both, floatBadge 4s ease-in-out 1s infinite;
+      transition: background 0.4s, border-color 0.4s, color 0.4s;
     }
 
     h1 {
@@ -117,8 +203,9 @@
       line-height: 1.15;
       letter-spacing: -0.02em;
       margin-bottom: 1.25rem;
-      color: #0f3d2b;
+      color: var(--text-main);
       animation: fadeUp 0.7s ease 0.15s both;
+      transition: color 0.4s;
     }
 
     h1 span {
@@ -133,10 +220,11 @@
     .tagline {
       font-size: 1.05rem;
       font-weight: 300;
-      color: #2d6b50;
+      color: var(--text-sub);
       line-height: 1.7;
       margin-bottom: 2.5rem;
       animation: fadeUp 0.7s ease 0.3s both;
+      transition: color 0.4s;
     }
 
     .topics {
@@ -148,58 +236,52 @@
     }
 
     .topic-pill {
-      background: rgba(255,255,255,0.5);
-      border: 1px solid rgba(255,255,255,0.8);
+      background: var(--pill-bg);
+      border: 1px solid var(--pill-border);
       border-radius: 50px;
       padding: 0.45rem 1.2rem;
       font-size: 0.88rem;
       font-weight: 500;
-      color: #1a4d38;
+      color: var(--pill-color);
       display: flex;
       align-items: center;
       gap: 0.4rem;
       backdrop-filter: blur(6px);
       cursor: pointer;
-      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      transition: background 0.25s, transform 0.2s, box-shadow 0.2s, color 0.4s, border-color 0.4s;
       animation: popIn 0.5s ease both;
       position: relative;
       overflow: hidden;
     }
-
-    /* Ripple shimmer on pill hover */
     .topic-pill::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
       transform: translateX(-100%);
-      transition: transform 0s;
     }
     .topic-pill:hover::after {
       transform: translateX(100%);
       transition: transform 0.4s ease;
     }
-
     .topic-pill:nth-child(1) { animation-delay: 0.45s; }
     .topic-pill:nth-child(2) { animation-delay: 0.55s; }
     .topic-pill:nth-child(3) { animation-delay: 0.65s; }
     .topic-pill:nth-child(4) { animation-delay: 0.75s; }
-
     .topic-pill:hover {
-      background: rgba(255,255,255,0.78);
+      background: var(--pill-hover-bg);
       transform: translateY(-4px) scale(1.04);
       box-shadow: 0 10px 28px rgba(30,120,80,0.18);
       animation: pulse 1.5s ease infinite;
     }
-
     .topic-pill .icon { font-size: 1.1rem; }
 
-    /* ── Modal ── */
+    /* Modal */
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(10,40,25,0.45);
-      backdrop-filter: blur(5px);
+      background: rgba(10,40,25,0.5);
+      backdrop-filter: blur(6px);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -208,64 +290,58 @@
       pointer-events: none;
       transition: opacity 0.3s ease;
     }
-    .modal-overlay.active {
-      opacity: 1;
-      pointer-events: all;
-    }
+    .modal-overlay.active { opacity: 1; pointer-events: all; }
 
     .modal {
-      background: linear-gradient(145deg, #e8faf2, #f4fdf9);
-      border: 1px solid rgba(255,255,255,0.9);
+      background: linear-gradient(145deg, var(--modal-bg1), var(--modal-bg2));
+      border: 1px solid rgba(255,255,255,0.15);
       border-radius: 24px;
       padding: 2.5rem 2.5rem 2rem;
       max-width: 440px;
       width: 90%;
-      box-shadow: 0 24px 70px rgba(20,90,55,0.22);
+      box-shadow: 0 24px 70px rgba(20,90,55,0.25);
       transform: scale(0.88) translateY(16px);
-      transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease;
+      transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease, background 0.4s;
       opacity: 0;
       text-align: center;
     }
-    .modal-overlay.active .modal {
-      transform: scale(1) translateY(0);
-      opacity: 1;
-    }
+    .modal-overlay.active .modal { transform: scale(1) translateY(0); opacity: 1; }
 
     .modal-icon {
       font-size: 3rem;
       margin-bottom: 0.6rem;
       display: block;
-      animation: none;
     }
-    .modal-overlay.active .modal-icon {
-      animation: popIn 0.5s ease 0.2s both;
-    }
+    .modal-overlay.active .modal-icon { animation: popIn 0.5s ease 0.15s both; }
 
     .modal h2 {
       font-size: 1.4rem;
       font-weight: 700;
-      color: #0f3d2b;
+      color: var(--modal-title);
       margin-bottom: 0.75rem;
+      transition: color 0.4s;
     }
 
     .modal p {
       font-size: 0.93rem;
-      color: #3a7a5c;
+      color: var(--modal-body);
       line-height: 1.7;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.6rem;
+      transition: color 0.4s;
     }
 
-    .modal .coming-tag {
+    .coming-tag {
       display: inline-block;
-      background: rgba(44,201,138,0.15);
-      border: 1px solid rgba(44,201,138,0.35);
+      background: var(--modal-tag-bg);
+      border: 1px solid var(--modal-tag-border);
       border-radius: 50px;
       padding: 0.25rem 0.85rem;
       font-size: 0.72rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: #1a6648;
-      margin-bottom: 1.4rem;
+      color: var(--modal-tag-color);
+      margin-bottom: 1.3rem;
+      transition: all 0.4s;
     }
 
     .modal-features {
@@ -275,15 +351,30 @@
     }
     .modal-features li {
       font-size: 0.88rem;
-      color: #2d6b50;
-      padding: 0.4rem 0;
-      border-bottom: 1px solid rgba(44,201,138,0.12);
+      color: var(--modal-feat);
+      padding: 0.42rem 0;
+      border-bottom: 1px solid var(--modal-feat-border);
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      transition: color 0.4s;
+      opacity: 0;
+      transform: translateX(-8px);
+      animation: none;
     }
+    .modal-overlay.active .modal-features li {
+      animation: featSlide 0.35s ease forwards;
+    }
+    .modal-features li:nth-child(1) { animation-delay: 0.25s; }
+    .modal-features li:nth-child(2) { animation-delay: 0.35s; }
+    .modal-features li:nth-child(3) { animation-delay: 0.45s; }
+    .modal-features li:nth-child(4) { animation-delay: 0.55s; }
     .modal-features li:last-child { border-bottom: none; }
-    .modal-features li .feat-icon { font-size: 1rem; }
+    .feat-icon { font-size: 1rem; }
+
+    @keyframes featSlide {
+      to { opacity: 1; transform: translateX(0); }
+    }
 
     .modal-close {
       background: linear-gradient(135deg, #2dc98a, #1a8c5e);
@@ -304,23 +395,57 @@
     .footer-note {
       margin-top: 1rem;
       font-size: 0.75rem;
-      color: #3a7a5c;
+      color: var(--text-footer);
       letter-spacing: 0.04em;
-      line-height: 1.8;
+      line-height: 1.9;
       animation: fadeUp 0.7s ease 0.85s both;
+      transition: color 0.4s;
     }
     .footer-note a {
-      color: #1a6648;
+      color: var(--text-muted);
       text-decoration: none;
       border-bottom: 1px solid rgba(26,102,72,0.3);
       transition: border-color 0.2s, color 0.2s;
     }
-    .footer-note a:hover { color: #0f3d2b; border-color: #0f3d2b; }
+    .footer-note a:hover { color: var(--text-main); border-color: var(--text-main); }
+
+    /* Tooltip on Colin Lee link */
+    .credit-tooltip {
+      position: relative;
+      display: inline-block;
+    }
+    .credit-tooltip .tip {
+      position: absolute;
+      bottom: calc(100% + 6px);
+      left: 50%;
+      transform: translateX(-50%) scale(0.92);
+      background: rgba(15,61,43,0.92);
+      color: #c8f0dd;
+      font-size: 0.68rem;
+      white-space: nowrap;
+      padding: 0.3rem 0.7rem;
+      border-radius: 8px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s, transform 0.2s;
+      letter-spacing: 0.03em;
+    }
+    [data-theme="dark"] .credit-tooltip .tip {
+      background: rgba(180,240,210,0.15);
+      color: #a8edca;
+      border: 1px solid rgba(44,201,138,0.2);
+    }
+    .credit-tooltip:hover .tip {
+      opacity: 1;
+      transform: translateX(-50%) scale(1);
+    }
   </style>
 </head>
 <body>
 
-  <!-- Floating particles injected by JS -->
+  <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn">
+    <span class="toggle-icon">🌙</span> Dark Mode
+  </button>
 
   <div class="container">
     <div class="badge">🧠 Coming Soon</div>
@@ -341,8 +466,13 @@
     </div>
 
     <p class="footer-note">
-      &copy; 2026 Brain Break &mdash; Andrew Davis, Alabama Student.<br>
-      Made with ♥ in 🇺🇸 by <a href="https://github.com/colinlee05" target="_blank" rel="noopener">Colin Lee</a> &amp; Andrew Davis.
+      &copy; 2026 Brain Break &mdash; an original concept by
+      <a href="https://www.ua.edu" target="_blank" rel="noopener">Andrew Davis</a>, Alabama Student.<br>
+      Website designed &amp; built by Andrew Davis &amp;
+      <span class="credit-tooltip">
+        <a href="https://github.com/colinlee05" target="_blank" rel="noopener">Colin Lee</a>
+        <span class="tip">Web Developer — Baton Rouge, LA</span>
+      </span>
     </p>
   </div>
 
@@ -361,8 +491,7 @@
   <script>
     const content = {
       film: {
-        icon: '🎬',
-        title: 'Film Therapy',
+        icon: '🎬', title: 'Film Therapy',
         body: 'Explore how cinema can be a powerful therapeutic tool — from tearjerkers that release emotion to uplifting stories that inspire change.',
         features: [
           { icon: '🎞️', text: 'Guides on how film therapy is practiced' },
@@ -372,8 +501,7 @@
         ]
       },
       music: {
-        icon: '🎵',
-        title: 'Music Therapy',
+        icon: '🎵', title: 'Music Therapy',
         body: 'Discover how rhythm, melody, and sound can regulate mood, reduce anxiety, and create deep emotional connections.',
         features: [
           { icon: '🎧', text: 'Playlists shown to reduce stress and boost mood' },
@@ -383,8 +511,7 @@
         ]
       },
       art: {
-        icon: '🎨',
-        title: 'Art Therapy',
+        icon: '🎨', title: 'Art Therapy',
         body: 'No artistic skill required — learn how the act of creating can process trauma, reduce stress, and build self-awareness.',
         features: [
           { icon: '🖌️', text: 'Beginner-friendly exercises and prompts' },
@@ -394,8 +521,7 @@
         ]
       },
       writing: {
-        icon: '✍️',
-        title: 'Writing Therapy',
+        icon: '✍️', title: 'Writing Therapy',
         body: 'Put words to feelings — expressive writing and journaling are among the most accessible and evidence-backed wellness tools.',
         features: [
           { icon: '📓', text: 'Journaling prompts for emotional processing' },
@@ -415,12 +541,10 @@
       ul.innerHTML = c.features.map(f =>
         `<li><span class="feat-icon">${f.icon}</span>${f.text}</li>`
       ).join('');
-      // Reset icon animation
-      const iconEl = document.getElementById('modal-icon');
-      iconEl.style.animation = 'none';
-      void iconEl.offsetWidth;
-      iconEl.style.animation = '';
-      document.getElementById('modal-overlay').classList.add('active');
+      const overlay = document.getElementById('modal-overlay');
+      overlay.classList.remove('active');
+      void overlay.offsetWidth;
+      overlay.classList.add('active');
     }
 
     function closeModal() {
@@ -433,24 +557,43 @@
 
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
+    // Dark / Light toggle
+    function toggleTheme() {
+      const html = document.documentElement;
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      const btn = document.getElementById('theme-btn');
+      btn.innerHTML = isDark
+        ? '<span class="toggle-icon">🌙</span> Dark Mode'
+        : '<span class="toggle-icon">☀️</span> Light Mode';
+      updateParticleColors();
+    }
+
     // Floating particles
+    const lightColors = ['#52c99a','#7de0b5','#2dc98a','#a8edca','#b2f0d8'];
+    const darkColors  = ['#1a6645','#0f4a30','#2dc98a','#0d3d25','#1a8c5e'];
+    let particleColors = lightColors;
+
+    function updateParticleColors() {
+      particleColors = document.documentElement.getAttribute('data-theme') === 'dark'
+        ? darkColors : lightColors;
+    }
+
     function createParticle() {
       const p = document.createElement('div');
       p.className = 'particle';
       const size = Math.random() * 10 + 5;
-      const colors = ['#52c99a','#7de0b5','#2dc98a','#a8edca','#b2f0d8'];
       p.style.cssText = `
         width:${size}px; height:${size}px;
         left:${Math.random()*100}vw;
-        background:${colors[Math.floor(Math.random()*colors.length)]};
+        background:${particleColors[Math.floor(Math.random()*particleColors.length)]};
         animation-duration:${Math.random()*12+8}s;
-        animation-delay:${Math.random()*6}s;
+        animation-delay:${Math.random()*4}s;
       `;
       document.body.appendChild(p);
       setTimeout(() => p.remove(), 20000);
     }
 
-    // Spawn particles over time
     for (let i = 0; i < 14; i++) setTimeout(createParticle, i * 600);
     setInterval(createParticle, 1800);
   </script>
