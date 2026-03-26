@@ -87,7 +87,6 @@
     }
 
     /* ── Layout ── */
-    /* Reduced max-width to tighten up the visual space */
     .page { display: none; width: 100%; max-width: 680px; position: relative; z-index: 1; }
     .page.active { display: flex; flex-direction: column; align-items: center; }
 
@@ -107,7 +106,6 @@
     /* ── HOME PAGE ── */
     #home { text-align: center; justify-content: center; padding-top: 4rem; padding-bottom: 2rem; }
 
-    /* ── BrainBreak animated title ── */
     .site-title {
       display: flex; justify-content: center; align-items: center; gap: 0;
       margin-bottom: 1.5rem; animation: fadeUp 0.6s ease 0s both;
@@ -167,7 +165,6 @@
     }
     .topics { display: flex; flex-wrap: wrap; gap: 0.8rem; justify-content: center; margin-bottom: 2.75rem; }
     
-    /* Bigger Buttons */
     .topic-pill {
       background: var(--pill-bg); border: 1px solid var(--pill-border); border-radius: 50px;
       padding: 0.75rem 1.5rem; font-size: 1.05rem; font-weight: 500; color: var(--pill-color);
@@ -210,7 +207,6 @@
     .modal-features li:nth-child(3) { animation-delay: 0.19s; }
     .modal-actions { display: flex; gap: 0.75rem; }
     
-    /* Beefed up modal buttons */
     .btn-begin { flex: 1; padding: 0.8rem 1.5rem; border-radius: 50px; border: none; background: var(--btn-bg); color: #fff; font-size: 1rem; font-weight: 600; cursor: pointer; font-family: inherit; transition: background 0.2s, transform 0.15s; }
     .btn-begin:hover { background: var(--btn-hover); transform: scale(1.03); }
     .btn-exit { padding: 0.8rem 1.5rem; border-radius: 50px; border: 1px solid var(--modal-tag-border); background: transparent; color: var(--modal-tag-color); font-size: 1rem; font-weight: 500; cursor: pointer; font-family: inherit; transition: background 0.2s; }
@@ -242,19 +238,28 @@
     .content-section h2 { font-size: 1.15rem; font-weight: 700; color: var(--text-main); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
     .content-section p  { font-size: 0.92rem; color: var(--modal-body); line-height: 1.75; margin-bottom: 0.75rem; }
     .content-section p:last-child { margin-bottom: 0; }
-    .content-section ul  { padding-left: 1.2rem; }
+    .content-section ul  { padding-left: 1.2rem; margin-bottom: 0.75rem; }
     .content-section li  { font-size: 0.92rem; color: var(--modal-body); line-height: 1.75; margin-bottom: 0.3rem; }
     .content-section li strong { color: var(--text-sub); }
     .content-section ol  { padding-left: 1.3rem; }
     .content-section ol li { font-size: 0.92rem; color: var(--modal-body); line-height: 1.8; margin-bottom: 0.4rem; }
     .tip-box { background: var(--modal-tag-bg); border: 1px solid var(--modal-tag-border); border-radius: 12px; padding: 0.85rem 1rem; font-size: 0.85rem; color: var(--modal-tag-color); margin-top: 0.9rem; line-height: 1.65; }
 
-    /* ── Media grid (clips / songs) ── */
-    .media-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin-top: 0.5rem; }
+    /* ── Media grid (clips / songs) - UPDATED TO FLEXBOX ── */
+    .media-grid { 
+      display: flex; 
+      flex-wrap: wrap; 
+      justify-content: center; /* This centers the final orphaned item */
+      gap: 1rem; 
+      margin-top: 0.5rem; 
+    }
     .media-card {
       background: var(--section-bg); border: 1px solid var(--card-border); border-radius: 14px;
       padding: 1rem; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
       display: flex; flex-direction: column; gap: 0.4rem;
+      width: calc(33.333% - 0.67rem); /* Ensures exactly 3 columns on larger screens */
+      min-width: 170px;
+      max-width: 220px;
     }
     .media-card:hover { transform: translateY(-4px); box-shadow: 0 10px 28px rgba(30,120,80,0.15); background: var(--pill-hover-bg); }
     .media-card .mc-thumb { width: 100%; aspect-ratio: 16/9; border-radius: 10px; background: var(--card-border); display: flex; align-items: center; justify-content: center; font-size: 2rem; overflow: hidden; }
@@ -298,19 +303,18 @@
     /* ── Footer ── */
     .site-footer {
       position: relative; z-index: 1; text-align: center; margin-top: auto; padding: 2rem 1rem 1rem;
-      font-size: 0.8rem; color: var(--text-footer); width: 100%;
+      font-size: 0.8rem; color: var(--text-footer); width: 100%; line-height: 1.5;
     }
     .site-footer a { color: var(--text-sub); text-decoration: none; }
     .site-footer a:hover { text-decoration: underline; }
     .footer-divider { width: 60px; height: 2px; background: var(--card-border); border-radius: 2px; margin: 0 auto 1rem; }
     
-    /* New footer link layout */
     .footer-links { display: flex; justify-content: center; gap: 1.25rem; flex-wrap: wrap; margin-top: 1rem; }
     .refs-link { font-size: 0.8rem; color: var(--modal-tag-color); text-decoration: underline; cursor: pointer; transition: color 0.2s;}
     .refs-link:hover { color: var(--text-main); }
 
     @media (max-width: 520px) {
-      .media-grid { grid-template-columns: 1fr 1fr; }
+      .media-card { width: calc(50% - 0.5rem); max-width: 100%; } /* Stack to 2 columns on mobile */
       .modal { padding: 2rem 1.5rem 1.5rem; }
       .content-section { padding: 1.25rem 1.25rem; }
       .footer-links { gap: 0.75rem; }
@@ -338,8 +342,8 @@
   </div>
   <span class="badge">🧠 Mental Wellness</span>
   <h1>Healing Through<br><span>the Arts</span></h1>
-  <p class="tagline">Your guide to mental health improvement through creativity and media.</p>
-  <p class="disclaimer">This is <strong>NOT</strong> a replacement for professional therapy — it is a supplement for improving mental health outside that environment.</p>
+  <p class="tagline">BrainBreak is your guide to mental health improvement through creativity and media, teaching about their potential in promoting wellness, with practical guides and curated resources to help you get started.</p>
+  <p class="disclaimer"><strong>DISCLAIMER:</strong> This is NOT meant to be a replacement for traditional professional therapy; it is merely a supplement for improving mental health outside that environment.</p>
 
   <div class="topics">
     <button class="topic-pill" onclick="openIntro('film')"><span class="icon">🎬</span> Film Therapy</button>
@@ -350,8 +354,8 @@
 
   <footer class="site-footer">
     <div class="footer-divider"></div>
-    © 2026 BrainBreak — an original concept by <a href="https://www.ua.edu/" target="_blank">Andrew Davis</a><br>
-    Website designed &amp; built by <a href="https://www.ua.edu/" target="_blank">Andrew Davis</a> &amp; <a href="https://github.com/colinlee05" target="_blank">Colin Lee</a>
+    © 2026 BrainBreak — an original concept by <a href="#" target="_blank">Andrew Davis</a><br>
+    Website designed &amp; built by <a href="#" target="_blank">Andrew Davis</a> &amp; <a href="https://github.com/colinlee05" target="_blank">Colin Lee</a>
     <div class="footer-links">
       <span class="refs-link" onclick="showPage('refs')">References</span>
       <span class="refs-link" onclick="showPage('disclaimer')">Disclaimer</span>
@@ -384,19 +388,25 @@
 
     <div class="content-section">
       <h2>📖 About Film Therapy</h2>
-      <p>Film therapy has shown potential in improving depression, anxiety, and other mental health issues. Through watching and reflecting on movies, people can unlock and experience repressed emotions — particularly effective for those experiencing emotional numbness.</p>
-      <p>Participants can connect with <strong>characters</strong> or <strong>themes</strong>, gain <strong>new perspectives</strong> on personal issues, and see improvements in <strong>anxiety</strong>, <strong>stress</strong>, <strong>depression</strong>, <strong>life satisfaction</strong>, <strong>emotional expression</strong>, and <strong>self-reflection</strong>. It can also release <strong>serotonin</strong>, <strong>dopamine</strong>, and <strong>oxytocin</strong>.</p>
+      <p>Also known as "reel therapy" or "cinematherapy," film therapy has shown potential in improving depression, anxiety, and other mental health issues. Through watching and reflecting on movies, people can unlock and experience repressed emotions, which is particularly effective in depressed individuals who often experience emotional numbness.</p>
+      <p>Participants can...</p>
+      <ul>
+        <li>Connect with <strong>characters</strong> or <strong>themes</strong></li>
+        <li>Gain <strong>new perspectives</strong> on personal issues</li>
+        <li>See improvements in <strong>anxiety</strong>, <strong>stress</strong>, <strong>depression</strong>, <strong>life satisfaction</strong>, <strong>emotional expression</strong> and <strong>processing</strong>, and <strong>self-reflection</strong></li>
+        <li>Release <strong>serotonin</strong>, <strong>dopamine</strong>, and <strong>oxytocin</strong></li>
+      </ul>
     </div>
 
     <div class="content-section">
       <h2>🎞️ The Process</h2>
       <ol>
-        <li>Make a personal goal you hope to achieve in film therapy.</li>
-        <li>Choose a film clip that best fits your goal.</li>
-        <li>Watch the clip, focusing on characters or themes you feel connected to.</li>
-        <li>Reflect on the feelings that arose and how they relate to yourself or your goal.</li>
+        <li>Make a personal goal that you hope to achieve in film therapy</li>
+        <li>Choose a film clip that best fits your goal</li>
+        <li>Watch the clip, focusing on characters or themes you feel connected to</li>
+        <li>Reflect on the feelings that arose from the clip and how they relate to yourself or your goal</li>
       </ol>
-      <div class="tip-box">💡 If this process helps you self-reflect or gain a new perspective — great! Repeat as needed. If not, try a different clip or a more achievable goal.<br><br>You can also practice <strong>art or writing therapy</strong> alongside film therapy by drawing or writing about feelings that arise.</div>
+      <div class="tip-box">💡 If this process helps you self-reflect or gain a new perspective, great! You can repeat this process as much as needed. If not, try a different clip or focus on a more easily achievable goal.<br><br>You can practice <strong>art or writing therapy</strong> alongside film therapy! To do this, simply draw or write about any feelings or emotions that arise. Click on the art therapy or writing therapy pages for more detailed information.<br><br>You can also practice film therapy on your own! Simply follow these same steps the next time you are watching a show or movie!</div>
     </div>
 
     <div class="content-section">
@@ -459,12 +469,13 @@
           <div class="mc-meta">Amusement</div>
         </div>
       </div>
-      <p class="coming-soon">More clips may be added in the future!</p>
+      <p class="coming-soon">More Clips May be Added in the Future!</p>
     </div>
 
     <footer class="site-footer">
       <div class="footer-divider"></div>
-      © 2026 BrainBreak — <a href="https://www.ua.edu/" target="_blank">Andrew Davis</a> &amp; <a href="https://github.com/colinlee05" target="_blank">Colin Lee</a>
+      © 2026 BrainBreak — an original concept by <a href="#" target="_blank">Andrew Davis</a><br>
+      Website designed &amp; built by <a href="#" target="_blank">Andrew Davis</a> &amp; <a href="https://github.com/colinlee05" target="_blank">Colin Lee</a>
       <div class="footer-links">
         <span class="refs-link" onclick="showPage('refs')">References</span>
         <span class="refs-link" onclick="showPage('disclaimer')">Disclaimer</span>
@@ -485,26 +496,32 @@
 
     <div class="content-section">
       <h2>📖 About Music Therapy</h2>
-      <p>Music therapy is highly impactful as a form of self-help. By listening to and reflecting on songs, people can achieve great overall improvements in mental wellness. Personal music taste also has a highly positive impact on outcomes, activating neurological reward signals.</p>
-      <p>Participants can connect with <strong>lyrics</strong> or <strong>expressed emotions</strong>, be moved by <strong>melodies</strong> and <strong>harmonies</strong>, and see improvements in <strong>stress</strong>, <strong>emotional expression</strong>, <strong>mood</strong>, <strong>depression</strong>, and even <strong>cognitive</strong> and <strong>motor functions</strong>. It can release <strong>serotonin</strong> and <strong>dopamine</strong> while lowering cortisol.</p>
+      <p>Music therapy has been shown to be highly impactful as a form of self-help. By listening to and reflecting on songs, people can achieve great overall improvements in mental wellness. Personal music taste also has a highly positive impact on outcomes, activating neurological reward signals.</p>
+      <p>Participants can...</p>
+      <ul>
+        <li>Connect with <strong>lyrics</strong> or <strong>expressed emotions</strong></li>
+        <li>Be moved by <strong>melodies</strong> and <strong>harmonies</strong> that activate reward signals</li>
+        <li>See improvements in <strong>stress</strong>, <strong>emotional expression</strong>, <strong>self-reflection</strong>, <strong>mood</strong>, <strong>depression</strong>, and even <strong>cognitive</strong> and <strong>motor functions</strong></li>
+        <li>Release <strong>serotonin</strong> and <strong>dopamine</strong> while lowering cortisol</li>
+      </ul>
     </div>
 
     <div class="content-section">
       <h2>🎧 The Process</h2>
       <ol>
-        <li>Make a personal goal you hope to achieve in music therapy.</li>
-        <li>Choose a genre and song that best fits your preference or goal.</li>
-        <li>Listen to the song, focusing on any emotions or thoughts that arise.</li>
-        <li>Reflect on the feelings you experienced and how they relate to your goal.</li>
+        <li>Make a personal goal that you hope to achieve in music therapy</li>
+        <li>Choose a genre and song that best fits your preference or goal</li>
+        <li>Listen to the song, focusing on any emotions or thoughts that arise from it</li>
+        <li>Reflect on the feelings that you experienced and how they relate to yourself or your goal</li>
       </ol>
-      <div class="tip-box">💡 If you aren't moved by the song, try a different one — or pick your own song outside this site.<br><br>You can also practice <strong>art or writing therapy</strong> alongside music therapy by drawing or writing about feelings that arise.</div>
+      <div class="tip-box">💡 If you aren’t moved by the song, try a different one, or even pick your own song outside of this site. If the process works for you, you can repeat it as much as needed.<br><br>You can practice <strong>art or writing therapy</strong> alongside music therapy! To do this, simply draw or write about any feelings or emotions that arise. Click on the art therapy or writing therapy pages for more detailed information.<br><br>You can also practice music therapy on your own! Simply follow these same steps the next time you are listening to your favorite songs!</div>
     </div>
 
     <div class="content-section">
-      <h2>🎵 Genres &amp; Songs</h2>
+      <h2>🎵 Genres and Songs</h2>
       <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;">Click any song to listen in a mini-player — no need to leave the site.</p>
 
-      <div class="category-label">Calm Music</div>
+      <div class="category-label">"Calm" Music</div>
       <div class="media-grid">
         <div class="media-card" onclick="openPlayer('YOUTUBE_ID_M1', 'Calm – Song 1')">
           <div class="mc-thumb">🎧</div>
@@ -560,12 +577,13 @@
           <div class="mc-meta">Rock</div>
         </div>
       </div>
-      <p class="coming-soon">More genres or songs may be added in the future!</p>
+      <p class="coming-soon">More Genres or Songs May be Added in the Future!</p>
     </div>
 
     <footer class="site-footer">
       <div class="footer-divider"></div>
-      © 2026 BrainBreak — <a href="https://www.ua.edu/" target="_blank">Andrew Davis</a> &amp; <a href="https://github.com/colinlee05" target="_blank">Colin Lee</a>
+      © 2026 BrainBreak — an original concept by <a href="#" target="_blank">Andrew Davis</a><br>
+      Website designed &amp; built by <a href="#" target="_blank">Andrew Davis</a> &amp; <a href="https://github.com/colinlee05" target="_blank">Colin Lee</a>
       <div class="footer-links">
         <span class="refs-link" onclick="showPage('refs')">References</span>
         <span class="refs-link" onclick="showPage('disclaimer')">Disclaimer</span>
@@ -586,19 +604,24 @@
 
     <div class="content-section">
       <h2>📖 About Art Therapy</h2>
-      <p>Art therapy has proven to have positive impacts on a wide variety of aspects of mental health — from depression and anxiety to overall quality of life. By drawing or sketching about personal issues, people can reflect on themselves and see their problems in a different light.</p>
-      <p>Participants can safely express their <strong>feelings</strong> without judgment, reflect on <strong>personal issues</strong> from a <strong>new angle</strong>, and see improvements in <strong>depression</strong>, <strong>anxiety</strong>, <strong>distress</strong>, <strong>mood</strong>, <strong>quality of life</strong>, <strong>coping</strong>, and <strong>self-esteem</strong>.</p>
+      <p>Art therapy has proven to have positive impacts on a wide variety of aspects of participants’ mental health, from depression and anxiety to overall quality-of-life. By drawing or sketching about their personal issues, people can reflect on themselves and see their problems in a different light. This can promote self-improvement through disclosing feelings and emotions in a safe, accessible way.</p>
+      <p>Participants can...</p>
+      <ul>
+        <li>Safely express their <strong>feelings</strong> without judgment</li>
+        <li>Reflect on <strong>personal issues</strong> and see them from a <strong>new angle</strong></li>
+        <li>See improvements in <strong>depression</strong>, <strong>anxiety</strong>, <strong>distress</strong>, <strong>mood</strong>, <strong>quality-of-life</strong>, <strong>coping</strong>, and <strong>self-esteem</strong></li>
+      </ul>
     </div>
 
     <div class="content-section">
       <h2>🖌️ The Process</h2>
       <ol>
-        <li>Make a personal goal you hope to achieve in art therapy.</li>
-        <li>Grab a pencil, paper, or whatever else you may use, and draw (no artistic skill required!).</li>
-        <li>Focus on your goal or current feelings throughout the process.</li>
-        <li>After finishing, reflect on your art and see how you chose to express your emotions in a new light.</li>
+        <li>Make a personal goal that you hope to achieve in art therapy</li>
+        <li>Grab a pencil, paper, or whatever else you may use, and draw (no artistic skill required!)</li>
+        <li>Focus on your goal or current feelings throughout the process</li>
+        <li>After you feel that you have finished, reflect on your art and see how you chose to express your emotions in a new light</li>
       </ol>
-      <div class="tip-box">💡 If you struggle to find inspiration, simply sketch whatever comes to mind.<br><br>You can also practice art therapy alongside <strong>film or music therapy</strong> — just draw feelings that arise from a clip or song.</div>
+      <div class="tip-box">💡 If you struggle to find inspiration, simply sketch whatever comes to mind. If the process works for you, you can repeat it as much as needed.<br><br>You can practice art therapy alongside <strong>film or music therapy</strong>! To do this, draw or sketch any feelings or emotions that arise from the film or song. Click on the film therapy or music therapy pages for more detailed information.<br><br>Now grab some paper and begin!</div>
     </div>
 
     <div class="content-section">
@@ -608,12 +631,13 @@
         <div class="prompt-card"><span class="prompt-num">2.</span> Prompt 2 — <em>Add your prompt text here</em></div>
         <div class="prompt-card"><span class="prompt-num">3.</span> Prompt 3 — <em>Add your prompt text here</em></div>
       </div>
-      <p class="coming-soon">More prompts may be added in the future!</p>
+      <p class="coming-soon">More Prompts May be Added in the Future!</p>
     </div>
 
     <footer class="site-footer">
       <div class="footer-divider"></div>
-      © 2026 BrainBreak — <a href="https://www.ua.edu/" target="_blank">Andrew Davis</a> &amp; <a href="https://github.com/colinlee05" target="_blank">Colin Lee</a>
+      © 2026 BrainBreak — an original concept by <a href="#" target="_blank">Andrew Davis</a><br>
+      Website designed &amp; built by <a href="#" target="_blank">Andrew Davis</a> &amp; <a href="https://github.com/colinlee05" target="_blank">Colin Lee</a>
       <div class="footer-links">
         <span class="refs-link" onclick="showPage('refs')">References</span>
         <span class="refs-link" onclick="showPage('disclaimer')">Disclaimer</span>
@@ -629,24 +653,29 @@
     <div class="page-header">
       <span class="page-emoji">✍️</span>
       <div class="page-title">Writing Therapy</div>
-      <div class="page-sub">Expressive writing as a tool for self-reflection and emotional processing</div>
+      <div class="page-sub">Explore how expressive writing can be an easy tool for self-reflection and emotional processing</div>
     </div>
 
     <div class="content-section">
       <h2>📖 About Writing Therapy</h2>
-      <p>Writing therapy, sometimes called "expressive writing," is a method for people to disclose their feelings and personal events in a safe, comfortable way. By writing about personal topics, people can reflect on themselves and their experiences to better understand them.</p>
-      <p>Participants can safely <strong>express themselves</strong> without judgment, immerse themselves in <strong>personal issues</strong> and <strong>events</strong> to gain a better understanding, and see improvements in <strong>emotional expression</strong>, <strong>self-reflection</strong>, <strong>PTSD</strong>, and even <strong>heart rate</strong>.</p>
+      <p>Writing therapy, sometimes called “expressive writing,” is a method for people to disclose their feelings and personal events in a safe, comfortable way. By writing about personal topics, people can reflect on themselves and their experiences to better understand them. The more immersed the writer is in their self-examination, the greater the outcomes of writing therapy will be.</p>
+      <p>Participants can...</p>
+      <ul>
+        <li>Safely <strong>express themselves</strong> without judgment</li>
+        <li>Immerse themselves in their <strong>personal issues</strong> and <strong>events</strong> to gain a better understanding of them</li>
+        <li>See improvements in <strong>emotional expression</strong> and <strong>regulation</strong>, <strong>self-reflection</strong>, <strong>PTSD</strong>, and even <strong>heart rate</strong></li>
+      </ul>
     </div>
 
     <div class="content-section">
       <h2>📓 The Process</h2>
       <ol>
-        <li>Make a personal goal you hope to achieve in writing therapy.</li>
-        <li>Begin writing, focusing on personal topics or events and immersing yourself in them.</li>
-        <li>Consider your thoughts and emotions about your topic and try to incorporate them into your writing.</li>
-        <li>When finished, reflect on your writing and any emotions that arose throughout the process.</li>
+        <li>Make a personal goal that you hope to achieve in writing therapy</li>
+        <li>Begin writing, focusing on personal topics or events and immersing yourself in them</li>
+        <li>Consider your thoughts and emotions about your topic and try to incorporate them into your writing</li>
+        <li>When finished, reflect on your writing and any emotions that arose throughout the process, considering how they relate to your goal</li>
       </ol>
-      <div class="tip-box">💡 Longer, more frequent sessions are ideal for maximum positive impact. Repeat as needed.<br><br>You can also practice writing therapy alongside <strong>film or music therapy</strong> — just write about feelings that arise from a clip or song.</div>
+      <div class="tip-box">💡 Longer, more frequent sessions of writing therapy are ideal for maximum positive impact. If the process works for you, you can repeat it as much as needed.<br><br>You can practice writing therapy alongside <strong>film or music therapy</strong>! To do this, simply write about any feelings or emotions that arise from the film or song. Click on the film therapy or music therapy pages for more detailed information.<br><br>Now grab some paper and begin!</div>
     </div>
 
     <div class="content-section">
@@ -656,12 +685,13 @@
         <div class="prompt-card"><span class="prompt-num">2.</span> Prompt 2 — <em>Add your prompt text here</em></div>
         <div class="prompt-card"><span class="prompt-num">3.</span> Prompt 3 — <em>Add your prompt text here</em></div>
       </div>
-      <p class="coming-soon">More prompts may be added in the future!</p>
+      <p class="coming-soon">More Prompts May be Added in the Future!</p>
     </div>
 
     <footer class="site-footer">
       <div class="footer-divider"></div>
-      © 2026 BrainBreak — <a href="https://www.ua.edu/" target="_blank">Andrew Davis</a> &amp; <a href="https://github.com/colinlee05" target="_blank">Colin Lee</a>
+      © 2026 BrainBreak — an original concept by <a href="#" target="_blank">Andrew Davis</a><br>
+      Website designed &amp; built by <a href="#" target="_blank">Andrew Davis</a> &amp; <a href="https://github.com/colinlee05" target="_blank">Colin Lee</a>
       <div class="footer-links">
         <span class="refs-link" onclick="showPage('refs')">References</span>
         <span class="refs-link" onclick="showPage('disclaimer')">Disclaimer</span>
@@ -681,7 +711,7 @@
     </div>
 
     <div class="content-section">
-      <ul style="list-style:none; padding:0; display:flex; flex-direction:column; gap:1rem;">
+      <ul style="list-style:none; padding:0; display:flex; flex-direction:column; gap:1rem; margin-bottom:0;">
         <li style="font-size:0.85rem; color:var(--modal-body); line-height:1.7; padding:0.75rem 1rem; background:var(--section-bg); border-radius:12px; border:1px solid var(--card-border);">Ahuja, Samridhi, et al. <em>Reel Therapy: Taking the Cinematic Route to Suicide Intervention.</em> Handbook of Suicide Prevention, Springer Nature Singapore, 2025. <a href="https://link.springer.com/chapter/10.1007/978-981-96-1403-5_25#author-information" target="_blank" style="color:var(--modal-tag-color);">Link</a></li>
         <li style="font-size:0.85rem; color:var(--modal-body); line-height:1.7; padding:0.75rem 1rem; background:var(--section-bg); border-radius:12px; border:1px solid var(--card-border);">Fallon, Veronica T., et al. "Stress Reduction from a Musical Intervention." <em>Psychomusicology: Music, Mind, and Brain,</em> vol. 30, no. 1, 2019. <a href="https://doi.org/10.1037/pmu0000246" target="_blank" style="color:var(--modal-tag-color);">DOI</a></li>
         <li style="font-size:0.85rem; color:var(--modal-body); line-height:1.7; padding:0.75rem 1rem; background:var(--section-bg); border-radius:12px; border:1px solid var(--card-border);">İyilikci, Elvan Arıkan, et al. "An Extended Emotion-Eliciting Film Clips Set (EGEFILM)." <em>Behavior Research Methods,</em> vol. 56, no. 2, 2023. <a href="https://doi.org/10.3758/s13428-022-02055-4" target="_blank" style="color:var(--modal-tag-color);">DOI</a></li>
@@ -697,7 +727,8 @@
 
     <footer class="site-footer">
       <div class="footer-divider"></div>
-      © 2026 BrainBreak — <a href="https://www.ua.edu/" target="_blank">Andrew Davis</a> &amp; <a href="https://github.com/colinlee05" target="_blank">Colin Lee</a>
+      © 2026 BrainBreak — an original concept by <a href="#" target="_blank">Andrew Davis</a><br>
+      Website designed &amp; built by <a href="#" target="_blank">Andrew Davis</a> &amp; <a href="https://github.com/colinlee05" target="_blank">Colin Lee</a>
       <div class="footer-links">
         <span class="refs-link" onclick="showPage('refs')">References</span>
         <span class="refs-link" onclick="showPage('disclaimer')">Disclaimer</span>
@@ -731,7 +762,8 @@
 
     <footer class="site-footer">
       <div class="footer-divider"></div>
-      © 2026 BrainBreak — <a href="https://www.ua.edu/" target="_blank">Andrew Davis</a> &amp; <a href="https://github.com/colinlee05" target="_blank">Colin Lee</a>
+      © 2026 BrainBreak — an original concept by <a href="#" target="_blank">Andrew Davis</a><br>
+      Website designed &amp; built by <a href="#" target="_blank">Andrew Davis</a> &amp; <a href="https://github.com/colinlee05" target="_blank">Colin Lee</a>
       <div class="footer-links">
         <span class="refs-link" onclick="showPage('refs')">References</span>
         <span class="refs-link" onclick="showPage('disclaimer')">Disclaimer</span>
@@ -766,7 +798,8 @@
 
     <footer class="site-footer">
       <div class="footer-divider"></div>
-      © 2026 BrainBreak — <a href="https://www.ua.edu/" target="_blank">Andrew Davis</a> &amp; <a href="https://github.com/colinlee05" target="_blank">Colin Lee</a>
+      © 2026 BrainBreak — an original concept by <a href="#" target="_blank">Andrew Davis</a><br>
+      Website designed &amp; built by <a href="#" target="_blank">Andrew Davis</a> &amp; <a href="https://github.com/colinlee05" target="_blank">Colin Lee</a>
       <div class="footer-links">
         <span class="refs-link" onclick="showPage('refs')">References</span>
         <span class="refs-link" onclick="showPage('disclaimer')">Disclaimer</span>
